@@ -61,7 +61,6 @@
 		4AE8C3D023AD2D3B005F9953 /* PoseNetInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseNetInput.swift; sourceTree = "<group>"; };
 		4AE8C3D223AD2D8A005F9953 /* PoseNetOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseNetOutput.swift; sourceTree = "<group>"; };
 		57C02DF057C02B4000000001 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,21 +96,12 @@
 			path = Pose;
 			sourceTree = "<group>";
 		};
-		1E2F76EA3781C8213469E3A0 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */,
-			);
-			name = Configuration;
-			sourceTree = "<group>";
-		};
 		4A2D23A522BB70E400494C55 = {
 			isa = PBXGroup;
 			children = (
 				57C02DF057C02B4000000001 /* README.md */,
 				4A2D23B022BB70E400494C55 /* Strange_camera */,
 				4A2D23AF22BB70E400494C55 /* Products */,
-				1E2F76EA3781C8213469E3A0 /* Configuration */,
 				0D8A71B927BDB43FD8F91908 /* LICENSE */,
 			);
 			sourceTree = "<group>";
@@ -308,7 +298,6 @@
 /* Begin XCBuildConfiguration section */
 		4A2D23C022BB70E500494C55 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -370,7 +359,6 @@
 		};
 		4A2D23C122BB70E500494C55 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -426,7 +414,6 @@
 		};
 		4A2D23C322BB70E500494C55 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -436,7 +423,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.posefinder${SAMPLE_CODE_DISAMBIGUATOR}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.posefinder1219";
 				PRODUCT_NAME = Strange_camera;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -446,7 +433,6 @@
 		};
 		4A2D23C422BB70E500494C55 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -456,7 +442,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.posefinder${SAMPLE_CODE_DISAMBIGUATOR}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.posefinder1219";
 				PRODUCT_NAME = Strange_camera;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
