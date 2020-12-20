@@ -161,6 +161,13 @@ extension ViewController: PoseNetDelegate {
         let poses = algorithm == .single
             ? [poseBuilder.pose]
             : poseBuilder.poses
+        
+        // print(poseBuilder.createPoseList(detectedPoses: poses))
+        let poseList: [[String]] = poseBuilder.createPoseList(detectedPoses: poses)
+        
+        let isOk:Bool = previewImageView.isStand(poseList: poseList)
+        
+        previewImageView.toruyo(isOk: isOk)
 
         previewImageView.show(poses: poses, on: currentFrame)
     }

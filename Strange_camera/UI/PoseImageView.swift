@@ -134,4 +134,44 @@ class PoseImageView: UIImageView {
         cgContext.addEllipse(in: rectangle)
         cgContext.drawPath(using: .fill)
     }
+    
+    func sortPose(poseList: [[String]]) -> [[String]] {
+        let partBody: [String] = ["rightKnee", "rightAnkle", "rightShoulder", "rightHip", "rightWrist", "rightEar", "rightEye", "rightElbow", "leftKnee", "leftAnkle", "leftShoulder", "leftHip", "leftWrist", "leftEar", "leftEye", "leftElbow", "nose"]
+        var sortList = [[String]](repeating: [String](repeating: "0", count: 3), count: 17)
+        
+        for pose in poseList {
+            let index: Int = partBody.firstIndex(of: String("\(pose[0])"))!
+            sortList[index] = pose
+        }
+        
+        return sortList
+    }
+//スタンド使いを判定する関数
+    // 原点は左上
+    func isStand(poseList: [[String]]) -> Bool {
+        let sortList: [[String]] = sortPose(poseList: poseList)
+        print(sortList)
+        let rightKneeY: Double = Double(sortList[0][2]) ?? 0.0
+        let rightAnkleY: Double = Double(sortList[1][2]) ?? 0.0
+        let leftKneeX: Double = Double(sortList[8][1]) ?? 0.0
+        let rightKneeX: Double = Double(sortList[0][1]) ?? 0.0
+        
+        if rightKneeY == 0.0 || rightAnkleY == 0.0 {
+            return false
+        }
+        
+        if rightKneeX > leftKneeX {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func toruyo(isOk: Bool) {
+        if isOk == true {
+            print("発火")
+        } else {
+            print("non")
+        }
+    }
 }

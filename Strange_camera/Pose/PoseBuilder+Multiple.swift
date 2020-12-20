@@ -50,13 +50,6 @@ extension PoseBuilder {
                 joint.position = joint.position.applying(modelToInputTransformation)
             }
         }
-        
-        for ahi in detectedPoses {
-            print(ahi)
-            for ah in ahi.joints.values {
-                print(ah.position)
-            }
-        }
 
         return detectedPoses
     }
@@ -276,6 +269,26 @@ extension PoseBuilder {
         joint.position = approximateJointPosition
         joint.confidence = output.confidence(for: joint.name, at: joint.cell)
         joint.isValid = joint.confidence >= configuration.jointConfidenceThreshold
+    }
+    
+    func createPoseList(detectedPoses: [Pose]) -> [[String]] {
+        var posesList = [[String]]()
+        var poseList = [String]()
+
+        if detectedPoses.isEmpty == false {
+            for poseCordi in detectedPoses[0].joints.values {
+                let strposeCordi = String("\(poseCordi.name)")
+                let xCoor: String = String("\(poseCordi.position.x)")
+                let yCoor: String = String("\(poseCordi.position.y)")
+                poseList.append(strposeCordi)
+                poseList.append(xCoor)
+                poseList.append(yCoor)
+                posesList.append(poseList)
+                poseList = []
+            }
+        }
+        
+        return posesList
     }
 }
 
