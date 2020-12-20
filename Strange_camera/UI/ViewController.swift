@@ -169,6 +169,6 @@ extension ViewController: PoseNetDelegate {
         
         previewImageView.toruyo(isOk: isOk)
 
-        previewImageView.show(poses: poses, on: currentFrame)
+        previewImageView.show(poses: poses, on: currentFrame, isOk: isOk)
     }
 }

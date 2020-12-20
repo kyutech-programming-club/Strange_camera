@@ -51,7 +51,7 @@ class PoseImageView: UIImageView {
     /// - parameters:
     ///     - poses: An array of detected poses.
     ///     - frame: The image used to detect the poses and used as the background for the returned image.
-    func show(poses: [Pose], on frame: CGImage) {
+    func show(poses: [Pose], on frame: CGImage, isOk: Bool) {
         let dstImageSize = CGSize(width: frame.width, height: frame.height)
         let dstImageFormat = UIGraphicsImageRendererFormat()
 
@@ -62,30 +62,38 @@ class PoseImageView: UIImageView {
         let dstImage = renderer.image { rendererContext in
             // Draw the current frame as the background for the new image.
             draw(image: frame, in: rendererContext.cgContext)
+            if isOk == false {
+                for pose in poses {
+                    // Draw the segment lines.
+                    for segment in PoseImageView.jointSegments {
+                        let jointA = pose[segment.jointA]
+                        let jointB = pose[segment.jointB]
 
-            for pose in poses {
-                // Draw the segment lines.
-                for segment in PoseImageView.jointSegments {
-                    let jointA = pose[segment.jointA]
-                    let jointB = pose[segment.jointB]
+                        guard jointA.isValid, jointB.isValid else {
+                            continue
+                        }
 
-                    guard jointA.isValid, jointB.isValid else {
-                        continue
+                        drawLine(from: jointA,
+                                 to: jointB,
+                                 in: rendererContext.cgContext)
                     }
 
-                    drawLine(from: jointA,
-                             to: jointB,
-                             in: rendererContext.cgContext)
+                    // Draw the joints as circles above the segment lines.
+                    for joint in pose.joints.values.filter({ $0.isValid }) {
+                        draw(circle: joint, in: rendererContext.cgContext)
+                    }
                 }
-
-                // Draw the joints as circles above the segment lines.
-                for joint in pose.joints.values.filter({ $0.isValid }) {
-                    draw(circle: joint, in: rendererContext.cgContext)
-                }
+            } else {
+                print("文字が表示されるううううーーーーーー")
             }
         }
 
         image = dstImage
+        
+        if isOk == true {
+            
+            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+        }
     }
 
     /// Vertically flips and draws the given image.
@@ -146,25 +154,43 @@ class PoseImageView: UIImageView {
         
         return sortList
     }
+    
+    func isJojo1(sortList: [[String]]) -> Bool {
+        let rightAnkleX: Double = Double(sortList[1][1]) ?? 0.0
+        let rightWristX: Double = Double(sortList[4][1]) ?? 0.0
+        let rightWristY: Double = Double(sortList[4][2]) ?? 0.0
+        let rightElbowX: Double = Double(sortList[7][1]) ?? 0.0
+        let rightElbowY: Double = Double(sortList[7][2]) ?? 0.0
+        let leftAnkleX: Double = Double(sortList[9][1]) ?? 0.0
+        let leftShoulderX: Double = Double(sortList[10][1]) ?? 0.0
+        let leftShoulderY: Double = Double(sortList[10][2]) ?? 0.0
+        let leftWristX: Double = Double(sortList[12][1]) ?? 0.0
+        let leftWristY: Double = Double(sortList[12][2]) ?? 0.0
+        let leftElbowX: Double = Double(sortList[15][1]) ?? 0.0
+        let leftElbowY: Double = Double(sortList[15][2]) ?? 0.0
+        
+        if rightAnkleX == 0.0 || leftElbowX == 0.0 || leftWristY == 0.0 || rightElbowY == 0.0 {
+            return false
+        }
+        
+        if rightAnkleX < rightWristX && rightWristX < rightElbowX {
+            if leftElbowX < leftWristX && leftWristX < leftShoulderX && leftShoulderX < leftAnkleX {
+                if leftWristY < leftShoulderY && leftShoulderY < leftElbowY {
+                    if rightElbowY < rightWristY {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
 //スタンド使いを判定する関数
     // 原点は左上
     func isStand(poseList: [[String]]) -> Bool {
         let sortList: [[String]] = sortPose(poseList: poseList)
         print(sortList)
-        let rightKneeY: Double = Double(sortList[0][2]) ?? 0.0
-        let rightAnkleY: Double = Double(sortList[1][2]) ?? 0.0
-        let leftKneeX: Double = Double(sortList[8][1]) ?? 0.0
-        let rightKneeX: Double = Double(sortList[0][1]) ?? 0.0
         
-        if rightKneeY == 0.0 || rightAnkleY == 0.0 {
-            return false
-        }
-        
-        if rightKneeX > leftKneeX {
-            return true
-        } else {
-            return false
-        }
+        return isJojo1(sortList: sortList)
     }
     
     func toruyo(isOk: Bool) {
