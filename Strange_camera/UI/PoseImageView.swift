@@ -54,6 +54,8 @@ class PoseImageView: UIImageView {
     func show(poses: [Pose], on frame: CGImage, isOk: Bool) {
         let dstImageSize = CGSize(width: frame.width, height: frame.height)
         let dstImageFormat = UIGraphicsImageRendererFormat()
+        // 画像インスタンス用
+        let imageJojo = UIImageView()
 
         dstImageFormat.scale = 1
         let renderer = UIGraphicsImageRenderer(size: dstImageSize,
@@ -91,6 +93,25 @@ class PoseImageView: UIImageView {
         image = dstImage
         
         if isOk == true {
+            // 画像を読み込んで、準備しておいたimageSampleに設定
+            imageJojo.image = UIImage(named: "baba-n")
+            // 画像のフレームを設定
+            imageJojo.frame = CGRect(x:0, y:0, width:dstImageSize.width * 2 / 3, height:dstImageSize.height * 2 / 3)
+
+            // 画像を中央に設定
+            imageJojo.center = CGPoint(x:dstImageSize.width/2, y:dstImageSize.height / 3)
+
+            // 設定した画像をスクリーンに表示する
+            self.addSubview(imageJojo)
+//
+//             画像を真ん中に重ねる
+//            let rect = CGRect(x: dstImageSize.width/2,
+//                y: dstImageSize.height/2,
+//                width: dstImageSize.width,
+//                height: dstImageSize.height)
+//
+//            imageJojo.image!.draw(in: rect)
+//
             
             UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
         }
@@ -188,7 +209,6 @@ class PoseImageView: UIImageView {
     // 原点は左上
     func isStand(poseList: [[String]]) -> Bool {
         let sortList: [[String]] = sortPose(poseList: poseList)
-        print(sortList)
         
         return isJojo1(sortList: sortList)
     }
